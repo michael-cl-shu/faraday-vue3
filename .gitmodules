@@ -1,3 +1,9 @@
 [submodule "vue3-fcc-course-static-code"]
 	path = vue3-fcc-course-static-code
 	url = git@github.com:gwenf/vue3-fcc-course-static-code.git
+[submodule "vue3-fcc-course-basic-product-cart-demo"]
+	path = vue3-fcc-course-basic-product-cart-demo
+	url = git@github.com:gwenf/vue3-fcc-course-basic-product-cart-demo.git
+[submodule "vue3-fcc-course-vue-cli-product-cart-demo"]
+	path = vue3-fcc-course-vue-cli-product-cart-demo
+	url = git@github.com:gwenf/vue3-fcc-course-vue-cli-product-cart-demo.git
