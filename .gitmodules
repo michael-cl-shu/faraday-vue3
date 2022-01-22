@@ -1,0 +1,3 @@
+[submodule "vue3-fcc-course-static-code"]
+	path = vue3-fcc-course-static-code
+	url = git@github.com:gwenf/vue3-fcc-course-static-code.git
