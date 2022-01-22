@@ -51,8 +51,9 @@
       template: `
         <form @submit.prevent="handleSubmit">
           <h1>{{ title }}</h1>
-          <custom-input type="email" v-bind:label="emailLabel"/>
-          <custom-input type="password" :label="passwordLabel"/>
+          <p v-for="str in inputs">{{ str }}</p>
+          <custom-input type="email" v-model="email" :label="emailLabel"/>
+          <custom-input type="password" v-model="password" :label="passwordLabel"/>
           <button >Log in</button>
         </form>
       `,
@@ -60,8 +61,13 @@
       data() {
         return {
           title: 'Login Form',
-          email: '',
-          password: '',
+          inputs: [
+            'email',
+            'password',
+            'name'
+          ],
+          email: 'abc@test.com2222',
+          password: '1234',
           emailLabel: 'Email',
           passwordLabel: 'Password'
         }
@@ -79,12 +85,24 @@
           <input type="text" v-model="inputValue"/>
         </label>
       `,
-      props: ['label'],
-      data() {
-        return {
-          inputValue: ''
+      props: ['label', 'modelValue'],
+      computed: {
+        inputValue: {
+        // get data from parent component via props  
+        get() {
+          return this.modelValue
+        },
+        set(value) {
+          // Emit update event to parent which is litening to whatever modelValue was bound.
+          this.$emit('update:modelValue', value)
         }
-      }
+      }}
+      
+      // data() {
+      //   return {
+      //     inputValue: ''
+      //   }
+      // }
     })
     app.mount('#app')
   </script>
