@@ -160,7 +160,7 @@
         </div>
 
       </main>
-      <sidebar v-if="showSidebar"/>
+      <sidebar v-if="showSidebar" :toggle="toggleSideBar"/>
       <footer>
       </footer>
 
@@ -197,6 +197,7 @@
       })
 
       app.component('sidebar', {
+        props: ['toggle'],
         template: `
         <aside class="cart-container">
         <div class="cart">
@@ -205,7 +206,7 @@
               Cart
               <i class="icofont-cart-alt icofont-1x"></i>
             </span>
-            <button class="cart-close">&times;</button>
+            <button @click="toggle" class="cart-close">&times;</button>
           </h1>
 
           <div class="cart-body">
