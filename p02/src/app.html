@@ -128,7 +128,10 @@
         props: ['toggle', 'cart', 'inventory'],
         computed: {
           cartTotal() {
-            return (this.cart.carrots * 4.82).toFixed(2)
+            const list = Object.entries(this.cart)
+            // curr[0]: name, curr[1]: quantity
+            const total = list.reduce((sum, curr) => sum + (curr[1] * this.getPrice(curr[0])), 0)
+            return total.toFixed(2)
           }
         },
         methods: {
