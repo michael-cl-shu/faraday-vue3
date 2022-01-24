@@ -25,7 +25,7 @@
         </nav>
         <a @click="toggleSideBar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
-          <span>Cart (0)</span>
+          <span>Cart ({{totalQuantity()}})</span>
         </a>
       </header>
 
@@ -109,8 +109,11 @@
         },
         methods: {
           addToCart(name, index) {
+            // this.inventory[index].quantity is 0 or undefined
+            if (!this.inventory[index].quantity) return
             if (!this.cart[name]) this.cart[name]= 0
             this.cart[name] += this.inventory[index].quantity
+            this.inventory[index].quantity = 0
             console.log(this.cart)
           },
           toggleSideBar() {
@@ -118,6 +121,11 @@
           },
           removeItem(name) {
             delete this.cart[name]
+          },
+          totalQuantity() {
+            const list = Object.entries(this.cart)
+            const total = list.reduce((sum, item) => sum + item[1], 0)
+            return total
           }
         },
         async mounted() {
@@ -129,18 +137,16 @@
 
       app.component('sidebar', {
         props: ['toggle', 'cart', 'inventory', 'remove'],
-        computed: {
+        methods: {
+          getPrice(name) {
+            const product = this.inventory.find(p => p.name === name)
+            return product.price.USD
+          },
           cartTotal() {
             const list = Object.entries(this.cart)
             // curr[0]: name, curr[1]: quantity
             const total = list.reduce((sum, curr) => sum + (curr[1] * this.getPrice(curr[0])), 0)
             return total.toFixed(2)
-          }
-        },
-        methods: {
-          getPrice(name) {
-            const product = this.inventory.find(p => p.name === name)
-            return product.price.USD
           }
         },
         template: `
@@ -184,7 +190,7 @@
 
             <p class="center" v-if="Object.keys(cart).length === 0"><em>No items in cart</em></p>
             <div class="spread">
-              <span><strong>Total:</strong> \${{cartTotal}}</span>
+              <span><strong>Total:</strong> \${{cartTotal()}}</span>
               <button class="btn btn-light">Checkout</button>
             </div>
           </div>
